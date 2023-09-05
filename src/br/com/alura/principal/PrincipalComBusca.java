@@ -1,7 +1,10 @@
 package br.com.alura.principal;
 
 import br.com.alura.screematch.modelos.Titulo;
+import br.com.alura.screematch.modelos.TituloOMDB;
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.net.URI;
@@ -27,9 +30,14 @@ public class PrincipalComBusca {
         String json = responce.body();
         System.out.println(json);
 
-        Gson gson = new Gson();
-        Titulo title = gson.fromJson(json, Titulo.class);
-        System.out.println(title);
+        Gson gson = new GsonBuilder()
+                .setFieldNamingPolicy(FieldNamingPolicy
+                .UPPER_CAMEL_CASE).create();
+        TituloOMDB titleOMDB = gson.fromJson(json, TituloOMDB.class);
+        System.out.println(titleOMDB);
+
+        Titulo title = new Titulo(titleOMDB);
+        System.out.println("Titulo já convertido: "+title);
     }
 }
 
